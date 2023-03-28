@@ -8,7 +8,7 @@ jobs:
       - name: Placeholder for running e2e tests via Github Actions (Cypress, Playwright, etc)
         run: sleep 30
   deployment_information:
-  if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
+    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Install Vercel CLI
