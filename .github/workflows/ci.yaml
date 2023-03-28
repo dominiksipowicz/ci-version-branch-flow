@@ -1,0 +1,21 @@
+name: CI
+on: [deployment_status]
+jobs:
+  e2e:
+    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Placeholder for running e2e tests via Github Actions (Cypress, Playwright, etc)
+        run: sleep 30
+  deployment_information:
+  if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Get Deployment URL
+        run: |
+          echo "Deployment URL: ${{ github.event.deployment_status.target_url }}"
+      - name: Inspect Deployment
+        run: |
+          vercel --token=${{ secrets.VERCEL_TOKEN }} inspect ${{ github.event.deployment_status.target_url }}
