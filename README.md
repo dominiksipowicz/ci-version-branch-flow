@@ -1,38 +1,60 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# POC: multi apps custom release workflow with release branches
 
-## Getting Started
+A POC for a custom release workflow involving multiple applications running on the same codebase.
 
-First, run the development server:
+## Overview of the custom CI workflow:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+- Release on its own branch (new version)
+- Multiple projects with multiple variables within a single code base
+- Use Vercel GitHub integration with custom workflow instead of Vercel CLI
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Current problems:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Need to manually remove and re-add the production domain
+- after re-adding prod domain still manual process to push empty commit
+- no instant rollbacks
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Example new workflow:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- work on feature
+- merge feature into develop branch `main`
+- cut off version `v1.0.0`
+- push code to `main`
+- vercel auto deploy to all projects
+- manual alias prod domain to both projects
+- push new commit or merge another feature (cherry pick)
+- manual alias prod domain to only one project
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Testing:
 
-## Learn More
+- push new commits on all branches should not affect prod domain
+- merging PRs with new features should not affect prod domain
+- cherry-picking on any branch should not affect prod domain
+- there should be no Preview comments on prod
+- test instant manual rollbacks (using alias with previous deployments)
 
-To learn more about Next.js, take a look at the following resources:
+## Q&A:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Q: How to check what commit / deployment is currently running on prod
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- `vercel inspect {prod_url}`
 
-## Deploy on Vercel
+Q: Where to get deployment URL after changes?
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Vercel UI -> Deployments - filter branch (select version)
+2. last deployments `vercel ls {project_name}`
+3. GH action output
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Q: How to check deployment URL by domain URL?
+
+- `vercel inspect {prod_url}`
+- alternatively check list of aliases `vercel alias ls`
+
+Q: how to manually promote to prod deployment
+
+- `vercel alias set deployment_url prod_domain`
+
+Q: How to manually rollback?
+
+- locate deployment url to rollback using Vercel UI or Vercel CLI
+- `vercel alias set deployment_url prod_domain`
