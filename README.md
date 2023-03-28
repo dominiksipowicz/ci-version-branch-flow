@@ -27,11 +27,11 @@ A POC for a custom release workflow involving multiple applications running on t
 
 ## Testing:
 
-- push new commits on all branches should not affect prod domain
-- merging PRs with new features should not affect prod domain
-- cherry-picking on any branch should not affect prod domain
-- there should be no Preview comments on prod
-- test instant manual rollbacks (using alias with previous deployments)
+ - [x] push new commits on all branches should not affect prod domain
+ - [x] merging PRs with new features should not affect prod domain
+ - [x] cherry-picking on any branch should not affect prod domain
+ - [x] there should be no Preview comments on prod
+ - [x] test instant manual rollbacks (using alias with previous deployments)
 
 ## Q&A:
 
