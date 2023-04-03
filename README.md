@@ -14,7 +14,7 @@ A POC for a custom release workflow involving multiple applications running on t
 |------|----|----|---|
 | trunk | N/A | `main` | https://ci-version-branch-flow-dev.vercel.app |
 | prod - project 1 | www.top-11.com | `v3.0.0` | https://ci-version-flow-1.vercel.app/ |
-| prod - project 2 | www.elevenr.com | `v2.0.0` | https://ci-version-flow-1-git-v200-dominiksipowicz.vercel.app/ |
+| prod - project 2 | www.elevenr.com | `v1.0.0` | https://ci-version-flow-1-git-v200-dominiksipowicz.vercel.app/ |
 
 
 ## Current problems:
