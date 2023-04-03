@@ -8,6 +8,15 @@ A POC for a custom release workflow involving multiple applications running on t
 - Multiple projects with multiple variables within a single code base
 - Use Vercel GitHub integration with custom workflow instead of Vercel CLI
 
+## example environments setup
+
+| environment | domain | version/branch | branch deployment URL |
+|------|----|----|---|
+| trunk | N/A | `main` | https://ci-version-branch-flow-dev.vercel.app |
+| prod - project 1 | www.top11.com | `v3.0.0` | https://ci-version-flow-1.vercel.app/ |
+| prod - project 2 | www.elevenr.com | `v2.0.0` | https://ci-version-flow-1-git-v200-dominiksipowicz.vercel.app/ |
+
+
 ## Current problems:
 
 - Need to manually remove and re-add the production domain
